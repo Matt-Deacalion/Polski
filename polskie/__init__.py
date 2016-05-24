@@ -6,6 +6,7 @@ __version__ = '0.0.1'
 
 from datetime import date, datetime, timedelta
 
+from fuzzywuzzy import fuzz
 from peewee import (CharField, DateField, DateTimeField, ForeignKeyField,
                     IntegrityError, Model, SqliteDatabase)
 
@@ -23,8 +24,39 @@ class Polskie:
         Call this to run Polskie.
         """
         self._start_db()
-        self.insert_mode()
+
+        if self.insert:
+            self.insert_mode()
+        else:
+            words = Word.get_day_iterations()
+
+            if not words:
+                print('No words in database. Gone into insert mode.')
+                self.insert_mode()
+            else:
+                self.run_mode(words)
+
         self._end_db()
+
+    def run_mode(self, words):
+        """
+        Go through `words` and ask for their English definitions.
+        """
+        # ANSI codes to move the cursor and make the tick green
+        tick = '\033[32m\033[{}C\033[1A ✓\033[39m'
+
+        for word in words:
+            prompt = '{} > '.format(word.word)
+            correct = False
+
+            while not correct:
+                translation = input(prompt)
+                correct = word.check_translation(translation)
+
+                if correct:
+                    print(tick.format(len(prompt + translation)))
+
+        Run.create()
 
     def insert_mode(self):
         """
@@ -138,6 +170,28 @@ class Word(BaseModel):
             for interval_date in dates:
                 Iteration.create(word=self, date=interval_date)
 
+    @classmethod
+    def get_day_iterations(cls, day=None):
+        """
+        Takes an optional `date` object and returns all the words to
+        be iterated for that day.
+        """
+        if day is None:
+            day = date.today()
+
+        return Word.select().join(Iteration).where(
+            Iteration.date == day,
+        ).group_by(Word)
+
+    def check_translation(self, translation):
+        """
+        Takes a `translation` and returns `True` if it's correct.
+        """
+        return any(
+            fuzz.token_sort_ratio(translation, t.translation) >= 90
+            for t in self.translations
+        )
+
 
 class Iteration(BaseModel):
     """
@@ -157,6 +211,6 @@ class Translation(BaseModel):
 
 class Run(BaseModel):
     """
-    A completed `run` of an `Iteration`.
+    A completed `Run` of an `Iteration`.
     """
     date = DateTimeField(default=datetime.now)
