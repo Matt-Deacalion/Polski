@@ -6,3 +6,6 @@ build/
 dist/
 *.egg-info/
 .cache/
+
+# Database
+db.sqlite3
