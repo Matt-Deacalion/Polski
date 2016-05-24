@@ -4,10 +4,10 @@ A command line tool to learn Polish using spaced repetition.
 __author__ = 'Matt Deacalion Stevens'
 __version__ = '0.0.1'
 
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 from peewee import (CharField, DateField, DateTimeField, ForeignKeyField,
-                    IntegerField, IntegrityError, Model, SqliteDatabase)
+                    IntegrityError, Model, SqliteDatabase)
 
 database = SqliteDatabase(None)
 
@@ -120,6 +120,23 @@ class Word(BaseModel):
     """
     word = CharField(unique=True)
     pronunciation = CharField(null=True)
+
+    def save(self, *args, **kwargs):
+        """
+        This has been overriden to automatically create the related
+        `Iteration` instances upon saving.
+        """
+        is_new = self.id is None
+
+        super().save(*args, **kwargs)
+
+        if is_new:
+            dates = [date.today() + timedelta(i) for i in [
+                1, 3, 5, 8, 13, 19, 25, 35,
+            ]]
+
+            for interval_date in dates:
+                Iteration.create(word=self, date=interval_date)
 
 
 class Iteration(BaseModel):
