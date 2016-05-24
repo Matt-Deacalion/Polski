@@ -23,6 +23,7 @@ setup(
     install_requires=[
         'docopt>=0.6.2',
         'fuzzywuzzy>=0.10.0',
+        'peewee>=2.8.1',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
