@@ -7,7 +7,7 @@ __version__ = '0.0.1'
 from datetime import datetime
 
 from peewee import (CharField, DateField, DateTimeField, ForeignKeyField,
-                    Model, SqliteDatabase)
+                    IntegerField, IntegrityError, Model, SqliteDatabase)
 
 database = SqliteDatabase(None)
 
@@ -23,7 +23,73 @@ class Polskie:
         Call this to run Polskie.
         """
         self._start_db()
+        self.insert_mode()
         self._end_db()
+
+    def insert_mode(self):
+        """
+        Takes user input and uses it to populate the database.
+        """
+        words_saved_count = 0
+
+        while True:
+            input_word = input('Polish word: ').strip().lower()
+
+            if not input_word:
+                break
+
+            try:
+                word = Word.create(word=input_word)
+            except IntegrityError:
+                print('"{}" already exists'.format(input_word))
+                continue
+
+            self.get_pronunciation(word)
+            self.get_translations(word)
+
+            words_saved_count += 1
+
+        if words_saved_count == 0:
+            print('No words added.')
+        else:
+            print('{} word{} saved.'.format(
+                words_saved_count,
+                's'[words_saved_count == 1:],
+            ))
+
+    def get_pronunciation(self, word):
+        """
+        Takes a `word` instance, asks the user for the corresponding
+        pronunciation and adds it to the `word`.
+        """
+        pronunciation = ''
+
+        while not pronunciation:
+            pronunciation = input('Pronunciation: ')
+
+        word.pronunciation = pronunciation.strip().lower()
+        word.save()
+
+    def get_translations(self, word):
+        """
+        Asks and creates one or more translations for a word.
+        """
+        translations_count = 0
+
+        while True:
+            translation = input('Translation: ')
+
+            if not translation:
+                if translations_count == 0:
+                    continue
+                else:
+                    break
+
+            Translation.create(
+                word=word,
+                translation=translation.strip().lower(),
+            )
+            translations_count += 1
 
     def _start_db(self):
         """
