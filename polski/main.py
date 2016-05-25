@@ -1,8 +1,8 @@
 # coding=utf-8
 
 """Usage:
-  polskie [--insert | --report] [--database=<path>]
-  polskie (-h | --help | --version)
+  polski [--insert | --report] [--database=<path>]
+  polski (-h | --help | --version)
 
 Options:
   --version              show program's version number and exit.
@@ -18,12 +18,12 @@ from docopt import docopt
 from fuzzywuzzy import fuzz
 from peewee import (CharField, DateField, DateTimeField, ForeignKeyField,
                     IntegrityError, Model, SqliteDatabase)
-from polskie import __version__
+from polski import __version__
 
 database = SqliteDatabase(None)
 
 
-class Polskie:
+class Polski:
     def __init__(self, **kwargs):
         self.report = kwargs.get('--report')
         self.insert = kwargs.get('--insert')
@@ -31,7 +31,7 @@ class Polskie:
 
     def run(self):
         """
-        Call this to run Polskie.
+        Call this to run Polski.
         """
         self._start_db()
 
@@ -228,9 +228,9 @@ class Run(BaseModel):
 
 def main():
     """
-    The entry point for the Polskie command line tool.
+    The entry point for the Polski command line tool.
     """
-    Polskie(**docopt(__doc__, version=__version__)).run()
+    Polski(**docopt(__doc__, version=__version__)).run()
 
 if __name__ == '__main__':
     main()

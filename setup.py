@@ -1,23 +1,23 @@
 from setuptools import setup
 
-import polskie
+import polski
 
 
 setup(
-    name='polskie',
-    version=polskie.__version__.strip(),
-    url='http://dirtymonkey.co.uk/polskie',
+    name='polski',
+    version=polski.__version__.strip(),
+    url='http://dirtymonkey.co.uk/polski',
     license='MIT',
-    author=polskie.__author__.strip(),
+    author=polski.__author__.strip(),
     author_email='matt@dirtymonkey.co.uk',
-    description=polskie.__doc__.strip().replace('\n', ' '),
+    description=polski.__doc__.strip().replace('\n', ' '),
     long_description=open('README.rst').read(),
-    keywords='polskie polish foreign language spaced repetition',
-    packages=['polskie'],
+    keywords='polski polish foreign language spaced repetition',
+    packages=['polski'],
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'polskie = polskie.main:main',
+            'polski = polski.main:main',
         ],
     },
     install_requires=[

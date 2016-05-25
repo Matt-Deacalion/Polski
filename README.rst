@@ -1,27 +1,27 @@
-==============
-Polskie Runner
-==============
+=============
+Polski Runner
+=============
 
 A command line tool to teach myself Polish using a spaced repetition
 algorithm.
 
 Installation
 ------------
-You can install *Polskie Runner* using pip:
+You can install *Polski Runner* using pip:
 
 .. code-block:: bash
 
-    $ pip install polskie
+    $ pip install polski
 
 Usage
 -----
-Use the `polskie` command to run Polskie Runner::
+Use the `polski` command to run Polski Runner::
 
-    $ polskie --help
+    $ polski --help
 
     Usage:
-      polskie [--insert | --report] [--database=<path>]
-      polskie (-h | --help | --version)
+      polski [--insert | --report] [--database=<path>]
+      polski (-h | --help | --version)
 
     Options:
       --version              show program's version number and exit.
