@@ -56,8 +56,11 @@ class Polski:
         tick = '\033[32m\033[{}C\033[1A ✓\033[39m'
 
         for word in words:
-            prompt = '{} > '.format(word.word)
             correct = False
+            prompt = '{} ({}) > '.format(
+                word.word,
+                word.pronunciation,
+            )
 
             while not correct:
                 translation = input(prompt)
