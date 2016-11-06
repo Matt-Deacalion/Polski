@@ -31,7 +31,16 @@ Use the `polski` command to run Polski Runner::
       -d, --database=<path>  path to the SQLite database [default: db.sqlite3].
 
 If no options are given, it will attempt to run through today's set
-of words, if any exist.
+of words, if any exist. If there are none, it will go into insert
+mode.
+
+.. image:: https://raw.github.com/Matt-Deacalion/Polski/master/run-mode.gif
+    :alt: Run Mode
+    :align: center
+
+.. image:: https://raw.github.com/Matt-Deacalion/Polski/master/input-mode.gif
+    :alt: Insert Mode
+    :align: center
 
 License
 -------
