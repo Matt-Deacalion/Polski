@@ -176,7 +176,7 @@ class Word(BaseModel):
         super().save(*args, **kwargs)
 
         if is_new:
-            dates = [date.today() + timedelta(i) for i in [
+            dates = [date.today() + timedelta(days=i) for i in [
                 1, 3, 5, 8, 13, 19, 25, 35,
             ]]
 
