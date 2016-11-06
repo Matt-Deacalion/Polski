@@ -5,6 +5,10 @@ Polski Runner
 A command line tool to teach myself Polish using a spaced repetition
 algorithm.
 
+.. image:: https://raw.github.com/Matt-Deacalion/Polski/master/run-mode.gif?v=1
+    :alt: Run Mode
+    :align: center
+
 Installation
 ------------
 You can install *Polski Runner* using pip:
@@ -33,14 +37,6 @@ Use the `polski` command to run Polski Runner::
 If no options are given, it will attempt to run through today's set
 of words, if any exist. If there are none, it will go into insert
 mode.
-
-.. image:: https://raw.github.com/Matt-Deacalion/Polski/master/run-mode.gif
-    :alt: Run Mode
-    :align: center
-
-.. image:: https://raw.github.com/Matt-Deacalion/Polski/master/input-mode.gif
-    :alt: Insert Mode
-    :align: center
 
 License
 -------
